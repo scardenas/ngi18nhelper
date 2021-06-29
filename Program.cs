@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using ng_i18n_helper.Escritores;
@@ -14,16 +13,9 @@ namespace ng_i18n_helper
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0)
-            {
-                Console.WriteLine("Uso: ngi18nhelper <fichero sin traducir> <diccionario ResX or XLIFF> <fichero resultado XLIFF>");
-                return;
-            }
-
-
-            var plantillaFichero = args[0];
-            var traduccionFichero = args[1];
-            var resultadoFichero = args[2];
+            var plantillaFichero = Environment.GetEnvironmentVariable("ORIGIN");
+            var traduccionFichero = Environment.GetEnvironmentVariable("RESX");
+            var resultadoFichero = Environment.GetEnvironmentVariable("TARGET");
 
             if (!File.Exists(plantillaFichero))
             {
@@ -42,6 +34,8 @@ namespace ng_i18n_helper
                 Console.WriteLine("La extensión del fichero resultado debe ser la misma que la del fichero plantilla");
                 return;
             }
+
+            Console.WriteLine("Iniciando proceso");
 
 
             // Lectura del diccionario
